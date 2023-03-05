@@ -9,12 +9,13 @@ class ActionsService:
     def generate_standings(self, competition_id):
         # Obtener información de la competencia.
         competitions = self.client.collection('competions').get_one(competition_id)
+        logging.info(competitions.id)
         logging.info('La función my_function ha sido llamada.')
         
         # Iterar sobre las categorías de la competencia.
         for category in competitions.categories:
             teams_list = self.get_teams_for_category(category)
-            if len(teams_list) != 0:
+            if len(teams_list.items) != 0:
                 self.create_standings_records(competitions, category, teams_list)
 
         print(f'Las posiciones de la competencia {competitions.name} se han generado exitosamente.')
