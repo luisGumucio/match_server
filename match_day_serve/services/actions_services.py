@@ -24,11 +24,12 @@ class ActionsService:
         # Obtener los equipos de la categoría.
         # return self.client.collection('teams').get_list(
         #     1, 50, query_params={filter: f'category = {category}'})
-        return self.client.collection('teams').get_list(
-                1, 50, query_params={filter: f'category = {category}'})
+        return self.client.collection("teams").get_list(
+    1, 20, {"filter": f'categoryId = "{category}"'})
 
     def create_standings_records(self, competitions, category, teams_list):
         # Iterar sobre los equipos de la categoría.
+
         for team in teams_list.items:
             data = {
                 "teamId": team.id,
@@ -40,7 +41,7 @@ class ActionsService:
                 "name": team.name,
                 "urlLogo": team.url_logo,
                 "categoryId": category,
-                "competitionId": competitions.id
+                "competionId": competitions.id
             }
             # Crear los registros de la tabla de posiciones.
             self.client.collection('standings').create(data)
